@@ -21,8 +21,9 @@ export default function Button({ children, icon, block, ...props }: Props) {
 }
 
 const StyeldButton = styled.button<StyelButtonProps>`
-  display: ${(props) => (props.block ? "flex" : "inline-flex")};
+  display: inline-flex;
   align-items: center;
+  width: ${({ block }) => block && "100%"};
   height: 32px;
   padding: 0 8px;
   border: none;
