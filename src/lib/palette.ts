@@ -6,6 +6,7 @@ const palette = {
   red: "#eb5a46",
   orange: "#ff9f1a",
   gray: "#ebecf0",
+  navy: "#172b4d",
 };
 
 export default palette;
