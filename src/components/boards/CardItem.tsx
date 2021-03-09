@@ -1,14 +1,23 @@
 import React from "react";
+import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import palette from "../../lib/palette";
 
-interface Props {}
+interface Props {
+  id: string;
+  index: number;
+  title: string;
+}
 
-export default function CardItem(props: Props) {
+export default function CardItem({ id, index, title }: Props) {
   return (
-    <StyledCardItem>
-      <Title>안녕하세요</Title>
-    </StyledCardItem>
+    <Draggable draggableId={id} index={index}>
+      {({ innerRef, draggableProps, dragHandleProps }) => (
+        <StyledCardItem ref={innerRef} {...draggableProps} {...dragHandleProps}>
+          <Title>{title}</Title>
+        </StyledCardItem>
+      )}
+    </Draggable>
   );
 }
 
