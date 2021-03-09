@@ -40,8 +40,8 @@ export default function BoardsPage(props: Props) {
     if (result.destination.index === result.source.index) {
       return;
     }
-    console.log(result);
   };
+
   return (
     <StyeldBoardsPage>
       <BoardNav>

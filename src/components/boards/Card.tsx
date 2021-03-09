@@ -22,7 +22,6 @@ export default function Card({ id, index, title }: Props) {
 }
 
 const StyledCard = styled.div`
-  min-height: 20px;
   padding: 6px 8px 6px;
   margin: 0 8px;
   border-radius: 3px;

@@ -1,12 +1,10 @@
-import React from "react";
 import styled from "styled-components";
-import Input from "../common/Input";
 import pallete from "../../lib/palette";
-import { BsFillTrashFill } from "react-icons/bs";
 import Button from "../common/Button";
 import { MdAdd } from "react-icons/md";
 import Card from "./Card";
 import { Draggable, Droppable } from "react-beautiful-dnd";
+import ListTitle from "./ListTitle";
 
 interface Props {
   id: string;
@@ -21,15 +19,10 @@ export default function List({ id, title, index, cards }: Props) {
       {({ innerRef, draggableProps, dragHandleProps }) => (
         <StyeldList ref={innerRef} {...draggableProps}>
           <div className="container">
-            <Title {...dragHandleProps}>
-              <TitleInput value={title} readOnly />
-              <div className="card-list__ trash">
-                <BsFillTrashFill />
-              </div>
-            </Title>
+            <ListTitle title={title} dragHandleProps={dragHandleProps} />
             <Droppable droppableId={id}>
               {({ innerRef, droppableProps, placeholder }) => (
-                <Cards ref={innerRef} {...droppableProps}>
+                <div ref={innerRef} {...droppableProps}>
                   {cards.map((card, index) => (
                     <Card
                       id={card.id}
@@ -39,7 +32,7 @@ export default function List({ id, title, index, cards }: Props) {
                     />
                   ))}
                   {placeholder}
-                </Cards>
+                </div>
               )}
             </Droppable>
             <div className="card-list__create-btn-wrapper">
@@ -72,37 +65,6 @@ const StyeldList = styled.div`
     margin-left: 8px;
   }
 `;
-
-const Title = styled.div`
-  display: flex;
-  align-items: center;
-  height: 40px;
-  padding: 5px 8px;
-
-  .card-list__trash {
-    cursor: pointer;
-    padding: 6px;
-  }
-
-  .card-list__trash svg {
-    fill: ${pallete.navy};
-  }
-
-  .card-list__trash:hover {
-    background-color: #dadbe2;
-  }
-`;
-
-const TitleInput = styled(Input)`
-  flex: 1;
-  box-shadow: none;
-  padding: 4px 8px;
-  color: ${pallete.navy};
-  font-weight: 600;
-  font-size: 14px;
-`;
-
-const Cards = styled.div``;
 
 const CreateCardItemButton = styled(Button)`
   color: #5e6c84;
