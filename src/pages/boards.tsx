@@ -3,7 +3,7 @@ import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
 import { MdAdd } from "react-icons/md";
 import styled from "styled-components";
-import CardList from "../components/boards/CardList";
+import List from "../components/boards/List";
 import Button from "../components/common/Button";
 
 const mockLists = [
@@ -53,7 +53,7 @@ export default function BoardsPage(props: Props) {
           {({ innerRef, droppableProps, placeholder }) => (
             <BoardConent ref={innerRef} {...droppableProps}>
               {lists.map(({ title, id, cards }, index) => (
-                <CardList
+                <List
                   id={id}
                   title={title}
                   key={id}
@@ -62,9 +62,9 @@ export default function BoardsPage(props: Props) {
                 />
               ))}
               {placeholder}
-              <CreateCardListButton block icon={<MdAdd />}>
+              <CreateListButton block icon={<MdAdd />}>
                 Add another list
-              </CreateCardListButton>
+              </CreateListButton>
             </BoardConent>
           )}
         </Droppable>
@@ -92,7 +92,7 @@ const BoardConent = styled.div`
   overflow-y: auto;
 `;
 
-const CreateCardListButton = styled(Button)`
+const CreateListButton = styled(Button)`
   height: 40px;
   width: 272px;
   min-width: 272px;

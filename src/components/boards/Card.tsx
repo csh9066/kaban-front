@@ -9,19 +9,19 @@ interface Props {
   title: string;
 }
 
-export default function CardItem({ id, index, title }: Props) {
+export default function Card({ id, index, title }: Props) {
   return (
     <Draggable draggableId={id} index={index}>
       {({ innerRef, draggableProps, dragHandleProps }) => (
-        <StyledCardItem ref={innerRef} {...draggableProps} {...dragHandleProps}>
+        <StyledCard ref={innerRef} {...draggableProps} {...dragHandleProps}>
           <Title>{title}</Title>
-        </StyledCardItem>
+        </StyledCard>
       )}
     </Draggable>
   );
 }
 
-const StyledCardItem = styled.div`
+const StyledCard = styled.div`
   min-height: 20px;
   padding: 6px 8px 6px;
   margin: 0 8px;

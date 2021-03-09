@@ -5,7 +5,7 @@ import pallete from "../../lib/palette";
 import { BsFillTrashFill } from "react-icons/bs";
 import Button from "../common/Button";
 import { MdAdd } from "react-icons/md";
-import CardItem from "./CardItem";
+import Card from "./Card";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 
 interface Props {
@@ -15,11 +15,11 @@ interface Props {
   cards: { id: string; title: string }[];
 }
 
-export default function CardList({ id, title, index, cards }: Props) {
+export default function List({ id, title, index, cards }: Props) {
   return (
     <Draggable draggableId={id} index={index}>
       {({ innerRef, draggableProps, dragHandleProps }) => (
-        <StyeldCardList ref={innerRef} {...draggableProps}>
+        <StyeldList ref={innerRef} {...draggableProps}>
           <div className="container">
             <Title {...dragHandleProps}>
               <TitleInput value={title} readOnly />
@@ -29,9 +29,9 @@ export default function CardList({ id, title, index, cards }: Props) {
             </Title>
             <Droppable droppableId={id}>
               {({ innerRef, droppableProps, placeholder }) => (
-                <CardItems ref={innerRef} {...droppableProps}>
+                <Cards ref={innerRef} {...droppableProps}>
                   {cards.map((card, index) => (
-                    <CardItem
+                    <Card
                       id={card.id}
                       index={index}
                       key={card.id}
@@ -39,7 +39,7 @@ export default function CardList({ id, title, index, cards }: Props) {
                     />
                   ))}
                   {placeholder}
-                </CardItems>
+                </Cards>
               )}
             </Droppable>
             <div className="card-list__create-btn-wrapper">
@@ -48,13 +48,13 @@ export default function CardList({ id, title, index, cards }: Props) {
               </CreateCardItemButton>
             </div>
           </div>
-        </StyeldCardList>
+        </StyeldList>
       )}
     </Draggable>
   );
 }
 
-const StyeldCardList = styled.div`
+const StyeldList = styled.div`
   min-width: 272px;
   width: 272px;
   user-select: none;
@@ -102,7 +102,7 @@ const TitleInput = styled(Input)`
   font-size: 14px;
 `;
 
-const CardItems = styled.div``;
+const Cards = styled.div``;
 
 const CreateCardItemButton = styled(Button)`
   color: #5e6c84;
