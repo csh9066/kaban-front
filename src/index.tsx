@@ -1,17 +1,24 @@
-import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { GlobalStyles } from "./GlobalStyles";
 import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import { configureStore } from "@reduxjs/toolkit";
+import rootReducer from "./store/index";
+
+const store = configureStore({
+  reducer: rootReducer,
+  devTools: process.env.NODE_ENV === "production" ? false : true,
+});
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
+  <BrowserRouter>
+    <Provider store={store}>
       <App />
       <GlobalStyles />
-    </BrowserRouter>
-  </React.StrictMode>,
+    </Provider>
+  </BrowserRouter>,
   document.getElementById("root")
 );
 
