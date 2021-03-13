@@ -7,9 +7,12 @@ interface StyledInputProps
 
 interface Props extends StyledInputProps {}
 
-export default function Input(props: Props) {
-  return <StyeldInput {...props}></StyeldInput>;
-}
+export default React.forwardRef<HTMLInputElement, Props>(function Input(
+  props,
+  ref
+) {
+  return <StyeldInput ref={ref} {...props}></StyeldInput>;
+});
 
 const StyeldInput = styled.input<StyledInputProps>`
   display: block;
@@ -20,7 +23,7 @@ const StyeldInput = styled.input<StyledInputProps>`
   outline: none;
   box-shadow: inset 0 0 0 2px #dfe1e6;
   background-color: ${palette.gray};
-
+  font-size: 14px;
   &:focus {
     box-shadow: inset 0 0 0 2px ${palette.blue};
   }
