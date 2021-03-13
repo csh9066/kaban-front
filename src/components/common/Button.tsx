@@ -19,8 +19,6 @@ export default function Button({
   color = "default",
   ...props
 }: Props) {
-  console.log(color);
-
   return (
     <StyeldButton block={!!block} color={color} {...props}>
       {icon && <span className="btn__icon">{icon}</span>}

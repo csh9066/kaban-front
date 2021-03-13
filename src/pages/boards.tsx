@@ -1,46 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
-import { v4 as uuidv4 } from "uuid";
-import { MdAdd } from "react-icons/md";
 import styled from "styled-components";
 import List from "../components/boards/List";
 import Button from "../components/common/Button";
-
-const mockLists = [
-  {
-    id: uuidv4(),
-    title: "리액트 스타일링 하기",
-    cards: [
-      { id: uuidv4(), title: "카드 컴포넌트 스타일링" },
-      { id: uuidv4(), title: "카드 리스트 컴포넌트 스타일링" },
-      { id: uuidv4(), title: "보드 페이지 컴포넌트 스타일링" },
-    ],
-  },
-  {
-    id: uuidv4(),
-    title: "리덕스 구조 만들기",
-    cards: [
-      { id: uuidv4(), title: "보드 스토어 구조 잡기" },
-      { id: uuidv4(), title: "유저 스토어 구조 잡기" },
-    ],
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { upsertLists, selectAllLists } from "../store/listSlice";
+import { addCards } from "../store/cardSlice";
+import { RootState } from "../store";
+import AddList from "../components/boards/AddList";
 
 interface Props {}
 
 export default function BoardsPage(props: Props) {
-  const [lists, setLists] = useState(mockLists);
-  console.log(lists);
+  const lists = useSelector((state: RootState) => selectAllLists(state));
 
-  const onDragEnd = (result: DropResult) => {
-    if (!result.destination) {
-      return;
-    }
-
-    if (result.destination.index === result.source.index) {
-      return;
-    }
-  };
+  const onDragEnd = (result: DropResult) => {};
 
   return (
     <StyeldBoardsPage>
@@ -52,19 +26,11 @@ export default function BoardsPage(props: Props) {
         <Droppable droppableId="list" direction="horizontal" type="list">
           {({ innerRef, droppableProps, placeholder }) => (
             <BoardConent ref={innerRef} {...droppableProps}>
-              {lists.map(({ title, id, cards }, index) => (
-                <List
-                  id={id}
-                  title={title}
-                  key={id}
-                  index={index}
-                  cards={cards}
-                />
+              {lists.map(({ title, id }, index) => (
+                <List id={id} title={title} key={id} index={index} />
               ))}
               {placeholder}
-              <CreateListButton block icon={<MdAdd />}>
-                Add another list
-              </CreateListButton>
+              <AddList />
             </BoardConent>
           )}
         </Droppable>
@@ -90,11 +56,4 @@ const BoardConent = styled.div`
   display: flex;
   padding: 0 8px;
   overflow-y: auto;
-`;
-
-const CreateListButton = styled(Button)`
-  height: 40px;
-  width: 272px;
-  min-width: 272px;
-  margin-left: 8px;
 `;
