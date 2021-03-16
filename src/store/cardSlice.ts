@@ -21,6 +21,7 @@ export const cardSlice = createSlice({
   initialState: cardAdapter.getInitialState(),
   reducers: {
     addCards: cardAdapter.addMany,
+    addCard: cardAdapter.addOne,
   },
 });
 
@@ -36,6 +37,6 @@ export const selectCardsByListId = createSelector(
       .sort((a, b) => a.order - b.order)
 );
 
-export const { addCards } = cardSlice.actions;
+export const { addCards, addCard } = cardSlice.actions;
 
 export default cardSlice.reducer;

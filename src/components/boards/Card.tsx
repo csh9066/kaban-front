@@ -40,4 +40,6 @@ const Title = styled.div`
   margin-bottom: 4px;
   font-size: 14px;
   color: ${palette.navy};
+  line-height: 20px;
+  word-wrap: break-word;
 `;
