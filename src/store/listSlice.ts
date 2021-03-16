@@ -17,6 +17,7 @@ export const listSlice = createSlice({
   initialState: listAdapter.getInitialState(),
   reducers: {
     addList: listAdapter.addOne,
+    upsertLists: listAdapter.upsertMany,
   },
 });
 
@@ -26,6 +27,6 @@ export const {
   selectIds: selectListIds,
 } = listAdapter.getSelectors((state: RootState) => state.list);
 
-export const { addList } = listSlice.actions;
+export const { addList, upsertLists } = listSlice.actions;
 
 export default listSlice.reducer;

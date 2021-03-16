@@ -1,11 +1,9 @@
-import React, { useEffect } from "react";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import styled from "styled-components";
 import List from "../components/boards/List";
 import Button from "../components/common/Button";
-import { useDispatch, useSelector } from "react-redux";
-import { upsertLists, selectAllLists } from "../store/listSlice";
-import { addCards } from "../store/cardSlice";
+import { useSelector } from "react-redux";
+import { selectAllLists } from "../store/listSlice";
 import { RootState } from "../store";
 import AddList from "../components/boards/AddList";
 
@@ -13,6 +11,7 @@ interface Props {}
 
 export default function BoardsPage(props: Props) {
   const lists = useSelector((state: RootState) => selectAllLists(state));
+  console.log(lists);
 
   const onDragEnd = (result: DropResult) => {};
 
