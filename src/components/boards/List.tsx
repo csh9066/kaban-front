@@ -24,8 +24,12 @@ export default function List({ id, title, index }: Props) {
       {({ innerRef, draggableProps, dragHandleProps }) => (
         <StyeldList ref={innerRef} {...draggableProps}>
           <div className="container">
-            <ListTitle title={title} dragHandleProps={dragHandleProps} />
-            <Droppable droppableId={id}>
+            <ListTitle
+              title={title}
+              dragHandleProps={dragHandleProps}
+              listId={id}
+            />
+            <Droppable droppableId={id} type="card">
               {({ innerRef, droppableProps, placeholder }) => (
                 <div ref={innerRef} {...droppableProps}>
                   {cards.map(({ id, title }, index) => (

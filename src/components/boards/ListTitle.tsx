@@ -1,35 +1,58 @@
 import React, { useState } from "react";
 import { DraggableProvidedDragHandleProps } from "react-beautiful-dnd";
 import { BsFillTrashFill } from "react-icons/bs";
+import { useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
 import palette from "../../lib/palette";
+import { updateList } from "../../store/listSlice";
 import Input from "../common/Input";
 
 interface Props {
   title: string;
+  listId: string;
   dragHandleProps?: DraggableProvidedDragHandleProps;
 }
 
-export default function ListTitle({ title, dragHandleProps }: Props) {
-  const [allowRename, setAllowRename] = useState(false);
-
-  const onToggleAllowRename = () => {
-    setAllowRename(!allowRename);
+export default function ListTitle({ title, listId, dragHandleProps }: Props) {
+  const [localTitle, setLocaltitle] = useState(title);
+  const onChangeLocalTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!title.length) {
+      return;
+    }
+    setLocaltitle(e.target.value);
   };
 
-  const onChangeTitle = () => {};
+  const dispatch = useDispatch();
+  const onChangeTitle = () => {
+    dispatch(
+      updateList({
+        id: listId,
+        changes: {
+          title,
+        },
+      })
+    );
+  };
+
+  const [allowRename, setAllowRename] = useState(false);
+  const onToggleAllowRename = () => {
+    if (allowRename && title !== localTitle) {
+      onChangeTitle();
+    }
+    setAllowRename(!allowRename);
+  };
 
   return (
     <Container {...dragHandleProps} onClick={onToggleAllowRename}>
       {allowRename ? (
         <TitleInput
-          value={title}
-          onChange={onChangeTitle}
+          value={localTitle}
+          onChange={onChangeLocalTitle}
           onBlur={onToggleAllowRename}
           autoFocus
         />
       ) : (
-        <Title>{title}</Title>
+        <Title>{localTitle}</Title>
       )}
       <div
         className="card-list__trash"
