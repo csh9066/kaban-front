@@ -16,50 +16,50 @@ interface Props {
 export default function ListTitle({ title, listId, dragHandleProps }: Props) {
   const [localTitle, setLocaltitle] = useState(title);
   const onChangeLocalTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!title.length) {
-      return;
-    }
     setLocaltitle(e.target.value);
   };
 
   const dispatch = useDispatch();
-  const onChangeTitle = () => {
+  const [allowRename, setAllowRename] = useState(false);
+
+  const onUpdateTitle = () => {
+    setAllowRename(!allowRename);
+
+    if (localTitle === title || !localTitle.length) {
+      setLocaltitle(title);
+      return;
+    }
+
     dispatch(
       updateList({
         id: listId,
         changes: {
-          title,
+          title: localTitle,
         },
       })
     );
   };
 
-  const [allowRename, setAllowRename] = useState(false);
-  const onToggleAllowRename = () => {
-    if (allowRename && title !== localTitle) {
-      onChangeTitle();
+  const onKeyPressEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      onUpdateTitle();
     }
-    setAllowRename(!allowRename);
   };
 
   return (
-    <Container {...dragHandleProps} onClick={onToggleAllowRename}>
+    <Container {...dragHandleProps}>
       {allowRename ? (
         <TitleInput
+          autoFocus
           value={localTitle}
           onChange={onChangeLocalTitle}
-          onBlur={onToggleAllowRename}
-          autoFocus
+          onBlur={onUpdateTitle}
+          onKeyPress={onKeyPressEnter}
         />
       ) : (
-        <Title>{localTitle}</Title>
+        <Title onClick={() => setAllowRename(!allowRename)}>{title}</Title>
       )}
-      <div
-        className="card-list__trash"
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-      >
+      <div className="card-list__trash">
         <BsFillTrashFill />
       </div>
     </Container>
