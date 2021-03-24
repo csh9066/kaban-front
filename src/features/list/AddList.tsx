@@ -3,10 +3,10 @@ import { MdAdd, MdClose } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import palette from "../../lib/palette";
-import { addList } from "../../store/listSlice";
-import Button from "../common/Button";
-import Input from "../common/Input";
+import { addList } from "./listSlice";
 import { v4 as uuidv4 } from "uuid";
+import Button from "../../components/Button";
+import Input from "../../components/Input";
 
 interface Props {}
 

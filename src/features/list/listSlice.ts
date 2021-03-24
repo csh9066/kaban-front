@@ -1,12 +1,12 @@
-import { IList } from "./../../types/board.d";
+import { IList } from "../../../types/board";
 import {
   createEntityAdapter,
   createSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
 import { DraggableLocation } from "react-beautiful-dnd";
-import { RootState } from ".";
-import { reorder } from "../lib/reorder";
+import { reorder } from "../../lib/reorder";
+import { RootState } from "../../store";
 
 const listAdapter = createEntityAdapter<IList>({
   selectId: (list) => list.id,

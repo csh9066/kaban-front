@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import Button from "./common/Button";
+import Button from "./Button";
 import { BsFillKanbanFill, BsHouseDoor, BsBell } from "react-icons/bs";
 
 interface Props {}

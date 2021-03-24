@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import palette from "../../lib/palette";
+import palette from "../lib/palette";
 
 interface StyelButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {

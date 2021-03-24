@@ -1,14 +1,14 @@
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import styled from "styled-components";
-import List from "../components/boards/List";
-import Button from "../components/common/Button";
+import List from "../features/list/List";
+import Button from "../components/Button";
 import { useDispatch, useSelector } from "react-redux";
 import {
   reorderCardinList,
   reorderList,
   selectAllLists,
-} from "../store/listSlice";
-import AddList from "../components/boards/AddList";
+} from "../features/list/listSlice";
+import AddList from "../features/list/AddList";
 
 interface Props {}
 

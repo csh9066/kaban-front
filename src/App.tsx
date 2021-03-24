@@ -4,12 +4,14 @@ import Header from "./components/Header";
 import { Route, Switch } from "react-router-dom";
 import BoardsPage from "./pages/boards";
 import palette from "./lib/palette";
+import IndexPage from "./pages";
 
 function App() {
   return (
     <StyeldApp>
       <Header />
       <Switch>
+        <Route path="/index" component={IndexPage} />
         <Route path="/" component={BoardsPage} />
       </Switch>
     </StyeldApp>

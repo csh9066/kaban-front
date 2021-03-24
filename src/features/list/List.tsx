@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import palette from "../../lib/palette";
-import Card from "./Card";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import ListTitle from "./ListTitle";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-import AddCard from "./AddCard";
-import { selectCardById } from "../../store/cardSlice";
+import AddCard from "../card/AddCard";
+import { selectCardById } from "../card/cardSlice";
 import { ICard, IList } from "../../../types/board";
+import Card from "../card/Card";
+import { RootState } from "../../store";
 
 interface Props {
   index: number;

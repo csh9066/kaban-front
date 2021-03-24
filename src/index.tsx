@@ -4,13 +4,7 @@ import reportWebVitals from "./reportWebVitals";
 import { GlobalStyles } from "./GlobalStyles";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import { configureStore } from "@reduxjs/toolkit";
-import rootReducer from "./store/index";
-
-const store = configureStore({
-  reducer: rootReducer,
-  devTools: process.env.NODE_ENV === "production" ? false : true,
-});
+import store from "./store";
 
 ReactDOM.render(
   <BrowserRouter>
