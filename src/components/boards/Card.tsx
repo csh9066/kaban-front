@@ -1,36 +1,32 @@
-import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
+import { ICard } from "../../../types/board";
 import palette from "../../lib/palette";
 
 interface Props {
-  id: string;
   index: number;
-  title: string;
+  card: ICard;
 }
 
-export default function Card({ id, index, title }: Props) {
+export default function Card({ index, card }: Props) {
   return (
-    <Draggable draggableId={id} index={index}>
+    <Draggable draggableId={card.id} index={index}>
       {({ innerRef, draggableProps, dragHandleProps }) => (
-        <StyledCard ref={innerRef} {...draggableProps} {...dragHandleProps}>
-          <Title>{title}</Title>
-        </StyledCard>
+        <Container ref={innerRef} {...draggableProps} {...dragHandleProps}>
+          <Title>{card.title}</Title>
+        </Container>
       )}
     </Draggable>
   );
 }
 
-const StyledCard = styled.div`
+const Container = styled.div`
   padding: 6px 8px 6px;
-  margin: 0 8px;
+  margin: 0 8px 8px 8px;
   border-radius: 3px;
   box-shadow: 0 1px 0 rgb(9 30 66 / 25%);
   background-color: ${palette.white};
   cursor: pointer;
-  & + & {
-    margin-top: 8px;
-  }
   &:hover {
     background-color: #f4f5f7;
   }

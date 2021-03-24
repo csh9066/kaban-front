@@ -1,15 +1,15 @@
-import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
+import { IList } from "./../../types/board.d";
+import {
+  createEntityAdapter,
+  createSlice,
+  PayloadAction,
+} from "@reduxjs/toolkit";
+import { DraggableLocation } from "react-beautiful-dnd";
 import { RootState } from ".";
+import { reorder } from "../lib/reorder";
 
-export interface List {
-  id: string;
-  title: string;
-  order: number;
-}
-
-const listAdapter = createEntityAdapter<List>({
+const listAdapter = createEntityAdapter<IList>({
   selectId: (list) => list.id,
-  sortComparer: (a, b) => a.order - b.order,
 });
 
 export const listSlice = createSlice({
@@ -17,6 +17,49 @@ export const listSlice = createSlice({
   initialState: listAdapter.getInitialState(),
   reducers: {
     addList: listAdapter.addOne,
+    addCardToList(
+      state,
+      { payload }: PayloadAction<{ listId: string; cardId: string }>
+    ) {
+      state.entities[payload.listId]?.cards.push(payload.cardId);
+    },
+    reorderCardinList(
+      state,
+      {
+        payload,
+      }: PayloadAction<{
+        source: DraggableLocation;
+        destination: DraggableLocation;
+      }>
+    ) {
+      const { source, destination } = payload;
+      if (source.droppableId === destination.droppableId) {
+        const list = state.entities[source.droppableId] as IList;
+        reorder(list.cards, source.index, destination.index);
+        return;
+      }
+      const sourceList = state.entities[source.droppableId] as IList;
+      const destinationList = state.entities[destination.droppableId] as IList;
+      const [card] = sourceList.cards.splice(source.index, 1);
+      destinationList.cards.splice(destination.index, 0, card);
+    },
+    reorderList(
+      state,
+      {
+        payload,
+      }: PayloadAction<{
+        source: DraggableLocation;
+        destination: DraggableLocation;
+      }>
+    ) {
+      const { source, destination } = payload;
+      const lists = state.ids.map((id) => state.entities[id]) as IList[];
+      listAdapter.setAll(
+        state,
+        reorder(lists, source.index, destination.index)
+      );
+    },
+    updateList: listAdapter.updateOne,
     upsertLists: listAdapter.upsertMany,
   },
 });
@@ -27,6 +70,13 @@ export const {
   selectIds: selectListIds,
 } = listAdapter.getSelectors((state: RootState) => state.list);
 
-export const { addList, upsertLists } = listSlice.actions;
+export const {
+  addList,
+  upsertLists,
+  updateList,
+  reorderList,
+  reorderCardinList,
+  addCardToList,
+} = listSlice.actions;
 
 export default listSlice.reducer;

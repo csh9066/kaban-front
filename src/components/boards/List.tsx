@@ -1,63 +1,74 @@
+import React from "react";
 import styled from "styled-components";
-import pallete from "../../lib/palette";
+import palette from "../../lib/palette";
 import Card from "./Card";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import ListTitle from "./ListTitle";
 import { useSelector } from "react-redux";
-import { selectCardsByListId } from "../../store/cardSlice";
 import { RootState } from "../../store";
 import AddCard from "./AddCard";
+import { selectCardById } from "../../store/cardSlice";
+import { ICard, IList } from "../../../types/board";
 
 interface Props {
-  id: string;
   index: number;
-  title: string;
+  list: IList;
 }
 
-export default function List({ id, title, index }: Props) {
-  const cards = useSelector((state: RootState) =>
-    selectCardsByListId(state, id)
-  );
-
+function List({ index, list }: Props) {
   return (
-    <Draggable draggableId={id} index={index}>
+    <Draggable draggableId={list.id} index={index}>
       {({ innerRef, draggableProps, dragHandleProps }) => (
-        <StyeldList ref={innerRef} {...draggableProps}>
-          <div className="container">
+        <Container ref={innerRef} {...draggableProps}>
+          <div className="wrapper">
             <ListTitle
-              title={title}
+              title={list.title}
               dragHandleProps={dragHandleProps}
-              listId={id}
+              listId={list.id}
             />
-            <Droppable droppableId={id} type="card">
+            <Droppable droppableId={list.id} type="card">
               {({ innerRef, droppableProps, placeholder }) => (
-                <div ref={innerRef} {...droppableProps}>
-                  {cards.map(({ id, title }, index) => (
-                    <Card id={id} index={index} key={id} title={title} />
-                  ))}
+                <div
+                  ref={innerRef}
+                  {...droppableProps}
+                  style={{ paddingBottom: 10 }}
+                >
+                  {list.cards.map((id, index) => {
+                    return <RenderCard id={id} index={index} key={id} />;
+                  })}
                   {placeholder}
                 </div>
               )}
             </Droppable>
-            <AddCard listId={id} />
+            <AddCard listId={list.id} />
           </div>
-        </StyeldList>
+        </Container>
       )}
     </Draggable>
   );
 }
 
-const StyeldList = styled.div`
+const RenderCard = React.memo(
+  ({ id, index }: { id: string; index: number }) => {
+    const card = useSelector((state: RootState) =>
+      selectCardById(state, id)
+    ) as ICard;
+
+    return <Card card={card} index={index} />;
+  }
+);
+
+const Container = styled.div`
   min-width: 272px;
   width: 272px;
   user-select: none;
 
-  .container {
-    background-color: ${pallete.gray};
+  .wrapper {
+    background-color: ${palette.gray};
     border-radius: 4px;
   }
 
-  & + & {
-    margin-left: 8px;
-  }
+  margin-left: 8px;
 `;
+
+export default React.memo(List);

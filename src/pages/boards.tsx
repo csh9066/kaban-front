@@ -2,43 +2,66 @@ import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import styled from "styled-components";
 import List from "../components/boards/List";
 import Button from "../components/common/Button";
-import { useSelector } from "react-redux";
-import { selectAllLists } from "../store/listSlice";
-import { RootState } from "../store";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  reorderCardinList,
+  reorderList,
+  selectAllLists,
+} from "../store/listSlice";
 import AddList from "../components/boards/AddList";
 
 interface Props {}
 
 export default function BoardsPage(props: Props) {
-  const lists = useSelector((state: RootState) => selectAllLists(state));
-  console.log(lists);
+  const lists = useSelector(selectAllLists);
 
-  const onDragEnd = (result: DropResult) => {};
+  const dispatch = useDispatch();
+
+  const onDragEnd = ({ destination, source, type }: DropResult) => {
+    if (!destination) {
+      return;
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    if (type === "list") {
+      dispatch(reorderList({ source, destination }));
+    }
+
+    if (type === "card") {
+      dispatch(reorderCardinList({ source, destination }));
+    }
+  };
 
   return (
-    <StyeldBoardsPage>
-      <BoardNav>
+    <Container>
+      <Nav>
         <Button>공부 리스트 </Button>
         <Button>초대하기</Button>
-      </BoardNav>
+      </Nav>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="list" direction="horizontal" type="list">
           {({ innerRef, droppableProps, placeholder }) => (
-            <BoardConent ref={innerRef} {...droppableProps}>
-              {lists.map(({ title, id }, index) => (
-                <List id={id} title={title} key={id} index={index} />
+            <Content ref={innerRef} {...droppableProps}>
+              {lists.map((list, index) => (
+                <List list={list} key={list.id} index={index} />
               ))}
               {placeholder}
               <AddList />
-            </BoardConent>
+            </Content>
           )}
         </Droppable>
       </DragDropContext>
-    </StyeldBoardsPage>
+    </Container>
   );
 }
 
-const StyeldBoardsPage = styled.main`
+const Container = styled.main`
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -46,13 +69,12 @@ const StyeldBoardsPage = styled.main`
   background-color: transparent;
 `;
 
-const BoardNav = styled.div`
+const Nav = styled.div`
   padding: 8px 4px 4px 8px;
 `;
 
-const BoardConent = styled.div`
+const Content = styled.div`
   flex: 1;
   display: flex;
-  padding: 0 8px;
   overflow-y: auto;
 `;

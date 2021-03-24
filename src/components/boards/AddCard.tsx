@@ -3,67 +3,66 @@ import { MdAdd, MdClose } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import palette from "../../lib/palette";
+import { createCard } from "../../store/cardSlice";
 import Button from "../common/Button";
 import TextArea from "../common/TextArea";
 import { v4 as uuidv4 } from "uuid";
-import { addCard } from "../../store/cardSlice";
 
 interface Props {
   listId: string;
 }
 
 export default function AddCard({ listId }: Props) {
-  const [isAddable, setIsAddable] = useState(false);
-  const [title, setTitle] = useState("");
   const dispatch = useDispatch();
 
+  const [title, setTitle] = useState("");
   const onChangeTitle = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTitle(e.target.value.trimStart());
   };
 
-  const onToggleIsAddable = (e: any) => {
+  const [isAddable, setIsAddable] = useState(false);
+  const onToggleIsAddable = () => {
     setIsAddable(!isAddable);
   };
 
-  const onKeyDown = (e: any) => {
-    if (e.code === "Enter") {
-      dispatch(
-        addCard({
+  const onAddCard = () => {
+    if (!title.length) {
+      return;
+    }
+
+    dispatch(
+      createCard({
+        card: {
           id: uuidv4(),
           title,
-          listId,
-          order: Math.random(),
-        })
-      );
-      setTitle("");
+        },
+        listId,
+      })
+    );
+    setTitle("");
+  };
+
+  const onKeyPressEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.code === "Enter") {
+      onAddCard();
     }
+  };
+
+  const onSumbitForm = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    onAddCard();
   };
 
   return (
     <Container>
       {isAddable ? (
-        <AddElementForm
-          onBlur={(e) => {
-            e.stopPropagation();
-          }}
-          onSubmit={(e) => {
-            e.preventDefault();
-            dispatch(
-              addCard({
-                id: uuidv4(),
-                title,
-                listId,
-                order: 1,
-              })
-            );
-          }}
-        >
+        <AddElementForm onSubmit={onSumbitForm}>
           <TextArea
             rows={3}
             autoFocus
             value={title}
             onChange={onChangeTitle}
-            onKeyPress={onKeyDown}
+            onKeyPress={onKeyPressEnter}
           />
           <div className="btn-group">
             <Button color="primary" type="submit">
@@ -85,6 +84,7 @@ export default function AddCard({ listId }: Props) {
 
 const Container = styled.div`
   padding: 8px;
+  background-color: ${palette.gray};
 `;
 
 const AddableButton = styled(Button)`

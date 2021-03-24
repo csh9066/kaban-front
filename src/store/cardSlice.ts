@@ -1,18 +1,10 @@
-import {
-  createEntityAdapter,
-  createSelector,
-  createSlice,
-} from "@reduxjs/toolkit";
+import { ICard } from "./../../types/board.d";
+import { createEntityAdapter, createSlice, Dispatch } from "@reduxjs/toolkit";
 import { RootState } from ".";
+import { IList } from "../../types/board";
+import { addCardToList, selectListById } from "./listSlice";
 
-export interface CardState {
-  id: string;
-  title: string;
-  listId: string;
-  order: number;
-}
-
-const cardAdapter = createEntityAdapter<CardState>({
+const cardAdapter = createEntityAdapter<ICard>({
   selectId: (card) => card.id,
 });
 
@@ -20,23 +12,28 @@ export const cardSlice = createSlice({
   name: "card",
   initialState: cardAdapter.getInitialState(),
   reducers: {
-    addCards: cardAdapter.addMany,
     addCard: cardAdapter.addOne,
   },
 });
 
-export const { selectAll: selectAllCards } = cardAdapter.getSelectors(
+export const { selectById: selectCardById } = cardAdapter.getSelectors(
   (state: RootState) => state.card
 );
 
-export const selectCardsByListId = createSelector(
-  [selectAllCards, (_: RootState, listId: string) => listId],
-  (cards, listId) =>
-    cards
-      .filter((card) => card.listId === listId)
-      .sort((a, b) => a.order - b.order)
-);
+export const { addCard } = cardSlice.actions;
 
-export const { addCards, addCard } = cardSlice.actions;
+export const createCard = ({
+  listId,
+  card,
+}: {
+  listId: string;
+  card: ICard;
+}) => (dispatch: Dispatch, getState: () => RootState) => {
+  const state = getState();
+  const list = selectListById(state, listId) as IList;
+  dispatch(addCardToList({ listId: list.id, cardId: card.id }));
+
+  dispatch(addCard(card));
+};
 
 export default cardSlice.reducer;
