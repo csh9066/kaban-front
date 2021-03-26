@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { GlobalStyles } from "./GlobalStyles";
+import { GlobalStyle } from "./lib/styles";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
@@ -10,7 +10,7 @@ ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
       <App />
-      <GlobalStyles />
+      <GlobalStyle />
     </Provider>
   </BrowserRouter>,
   document.getElementById("root")
