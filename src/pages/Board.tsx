@@ -12,7 +12,7 @@ import AddList from "../features/list/AddList";
 
 interface Props {}
 
-export default function BoardsPage(props: Props) {
+export default function Board(props: Props) {
   const lists = useSelector(selectAllLists);
 
   const dispatch = useDispatch();

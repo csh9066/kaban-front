@@ -2,23 +2,23 @@ import React from "react";
 import styled from "styled-components";
 import Header from "./components/Header";
 import { Route, Switch } from "react-router-dom";
-import BoardsPage from "./pages/boards";
+import Board from "./pages/Board";
 import palette from "./lib/palette";
-import IndexPage from "./pages";
+import BoardList from "./pages/BoardList";
 
 function App() {
   return (
-    <StyeldApp>
+    <Container>
       <Header />
       <Switch>
-        <Route path="/index" component={IndexPage} />
-        <Route path="/" component={BoardsPage} />
+        <Route path="/" exact component={BoardList} />
+        <Route path="/b/:id" component={Board} />
       </Switch>
-    </StyeldApp>
+    </Container>
   );
 }
 
-const StyeldApp = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
