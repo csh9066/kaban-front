@@ -3,7 +3,7 @@ import { MdAdd, MdClose } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import palette from "../../lib/palette";
-import { createCard } from "./cardSlice";
+import { createCard } from "./CardSlice";
 import Button from "../../components/Button";
 import { v4 as uuidv4 } from "uuid";
 import TextArea from "../../components/TextArea";

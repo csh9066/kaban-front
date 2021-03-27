@@ -1,7 +1,7 @@
-import { ICard } from "../../../types/board";
+import { ICard } from "../../types";
 import { createEntityAdapter, createSlice, Dispatch } from "@reduxjs/toolkit";
-import { IList } from "../../../types/board";
-import { addCardToList, selectListById } from "../list/listSlice";
+import { IList } from "../../types";
+import { addCardToList, selectListById } from "../list/ListSlice";
 import { RootState } from "../../store";
 
 const cardAdapter = createEntityAdapter<ICard>({

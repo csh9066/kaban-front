@@ -7,15 +7,14 @@ import {
   reorderCardinList,
   reorderList,
   selectAllLists,
-} from "../features/list/listSlice";
+} from "../features/list/ListSlice";
 import AddList from "../features/list/AddList";
 
 interface Props {}
 
 export default function Board(props: Props) {
-  const lists = useSelector(selectAllLists);
-
   const dispatch = useDispatch();
+  const lists = useSelector(selectAllLists);
 
   const onDragEnd = ({ destination, source, type }: DropResult) => {
     if (!destination) {
@@ -41,7 +40,7 @@ export default function Board(props: Props) {
   return (
     <Container>
       <Nav>
-        <Button>공부 리스트 </Button>
+        <Button>트렐로 만들기</Button>
         <Button>초대하기</Button>
       </Nav>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -65,7 +64,6 @@ const Container = styled.main`
   flex: 1;
   display: flex;
   flex-direction: column;
-  height: 100%;
   background-color: transparent;
 `;
 

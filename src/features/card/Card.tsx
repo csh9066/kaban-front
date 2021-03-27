@@ -1,6 +1,6 @@
 import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
-import { ICard } from "../../../types/board";
+import { ICard } from "../../types";
 import palette from "../../lib/palette";
 
 interface Props {

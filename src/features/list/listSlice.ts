@@ -1,4 +1,4 @@
-import { IList } from "../../../types/board";
+import { IList } from "../../types";
 import {
   createEntityAdapter,
   createSlice,
