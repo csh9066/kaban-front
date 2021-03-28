@@ -9,11 +9,13 @@ import {
   selectAllLists,
 } from "../features/list/ListSlice";
 import AddList from "../features/list/AddList";
+import MainTemplate from "../components/MainTemplate";
+import { RootState } from "../store";
+import { useParams } from "react-router";
 
-interface Props {}
-
-export default function Board(props: Props) {
+export default function Board() {
   const dispatch = useDispatch();
+
   const lists = useSelector(selectAllLists);
 
   const onDragEnd = ({ destination, source, type }: DropResult) => {
@@ -37,26 +39,37 @@ export default function Board(props: Props) {
     }
   };
 
+  const { id } = useParams<{ id: string }>();
+  const board = useSelector((state: RootState) =>
+    state.board.boards.find((board) => board.id === parseInt(id))
+  );
+
+  if (!board) {
+    return <div>not found board</div>;
+  }
+
   return (
-    <Container>
-      <Nav>
-        <Button>트렐로 만들기</Button>
-        <Button>초대하기</Button>
-      </Nav>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="list" direction="horizontal" type="list">
-          {({ innerRef, droppableProps, placeholder }) => (
-            <Content ref={innerRef} {...droppableProps}>
-              {lists.map((list, index) => (
-                <List list={list} key={list.id} index={index} />
-              ))}
-              {placeholder}
-              <AddList />
-            </Content>
-          )}
-        </Droppable>
-      </DragDropContext>
-    </Container>
+    <MainTemplate background={board?.background}>
+      <Container>
+        <Nav>
+          <Button>트렐로 만들기</Button>
+          <Button>초대하기</Button>
+        </Nav>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="list" direction="horizontal" type="list">
+            {({ innerRef, droppableProps, placeholder }) => (
+              <Content ref={innerRef} {...droppableProps}>
+                {lists.map((list, index) => (
+                  <List list={list} key={list.id} index={index} />
+                ))}
+                {placeholder}
+                <AddList />
+              </Content>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </Container>
+    </MainTemplate>
   );
 }
 
