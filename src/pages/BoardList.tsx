@@ -1,25 +1,36 @@
 import { BsGrid3X3GapFill } from "react-icons/bs";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import MainTemplate from "../components/MainTemplate";
 import BoardTile from "../features/board/BoardTile";
 import CreateBoard from "../features/board/CreateBoard";
+import { RootState } from "../store";
 
 function BoardList() {
+  const boards = useSelector((state: RootState) => state.board.boards);
   return (
-    <Container>
-      <Wrapper>
-        <Title>
-          <BsGrid3X3GapFill />
-          <h1>All Boards</h1>
-        </Title>
-        <BoardTiles>
-          <BoardTile to="b/4">공부 리스트</BoardTile>
-          <BoardTile to="b/4">하이</BoardTile>
-          <BoardTile to="b/4">하이</BoardTile>
-          <BoardTile to="b/4">하이</BoardTile>
-          <CreateBoard />
-        </BoardTiles>
-      </Wrapper>
-    </Container>
+    <MainTemplate>
+      <Container>
+        <Wrapper>
+          <Title>
+            <BsGrid3X3GapFill />
+            <h1>All Boards</h1>
+          </Title>
+          <BoardTiles>
+            {boards.map((board) => (
+              <BoardTile
+                key={board.id}
+                theme={board.background}
+                to={`/b/${board.id}`}
+              >
+                {board.title}
+              </BoardTile>
+            ))}
+            <CreateBoard />
+          </BoardTiles>
+        </Wrapper>
+      </Container>
+    </MainTemplate>
   );
 }
 

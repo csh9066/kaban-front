@@ -10,10 +10,10 @@ interface Props {
   theme?: string;
 }
 
-function BoardTile({ children, to }: Props) {
+function BoardTile({ children, to, theme }: Props) {
   return (
     <Container to={to}>
-      <Wrapper>
+      <Wrapper theme={theme}>
         <Fade />
         {children}
       </Wrapper>
@@ -35,7 +35,7 @@ const Container = styled(Link)`
 
 const Wrapper = styled.div<{ theme: String }>`
   ${BoardTileStyle}
-  background-color: ${palette.blue};
+  background-color: ${({ theme }) => theme || palette.blue};
   color: ${palette.white};
   &:hover ${Fade} {
     background-color: rgba(0, 0, 0, 0.1);
