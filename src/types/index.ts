@@ -1,7 +1,7 @@
 export interface IBoard {
   id: number;
   title: string;
-  theme: string;
+  background: string;
 }
 
 export interface IList {
