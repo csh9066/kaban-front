@@ -1,6 +1,5 @@
 import React from "react";
 import { BsFillKanbanFill } from "react-icons/bs";
-import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import palette from "../../lib/palette";
@@ -22,7 +21,6 @@ function AuthTemplate({ children, type, errorMessage }: Props) {
         {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
         <Title>{type === "login" ? "로그인" : "회원가입"}</Title>
         {children}
-
         <Divide />
         <Footer>
           {type === "login" ? (
@@ -94,32 +92,6 @@ const Title = styled.div`
   font-size: 16px;
   font-weight: 700;
   line-height: 28px;
-`;
-
-const GoogleLoginButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 44px;
-  margin-top: 20px;
-  box-shadow: rgb(0 0 0 / 20%) 1px 1px 5px 0;
-  background-color: ${palette.white};
-  border: transparent;
-  border-radius: 3px;
-  color: #505f79;
-  outline: none;
-  cursor: pointer;
-
-  svg {
-    width: 18px;
-    height: 18px;
-  }
-
-  .text {
-    font-weight: bold;
-    margin-left: 4px;
-  }
 `;
 
 const Divide = styled.div`
