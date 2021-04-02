@@ -6,6 +6,8 @@ interface StyelButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   block?: boolean;
   color?: "default" | "primary";
+  align?: "center" | "left" | "right";
+  size?: "large" | "medium" | "small";
 }
 
 interface Props extends StyelButtonProps {
@@ -17,10 +19,18 @@ export default function Button({
   icon,
   block,
   color = "default",
+  align = "left",
+  size = "medium",
   ...props
 }: Props) {
   return (
-    <StyeldButton block={!!block} color={color} {...props}>
+    <StyeldButton
+      block={!!block}
+      color={color}
+      align={align}
+      size={size}
+      {...props}
+    >
       {icon && <span className="btn__icon">{icon}</span>}
       {children && <span>{children}</span>}
     </StyeldButton>
@@ -40,11 +50,18 @@ const colorStyles = {
   `,
 };
 
+const sizeMap = {
+  small: "21px",
+  medium: "32px",
+  large: "44px",
+};
+
 const StyeldButton = styled.button<StyelButtonProps>`
   display: inline-flex;
   align-items: center;
+  justify-content: ${({ align }) => align};
   width: ${({ block }) => block && "100%"};
-  height: 32px;
+  height: ${({ size }) => size && sizeMap[size]};
   padding: 0 8px;
   border: none;
   border-radius: 3px;
