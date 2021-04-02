@@ -24,8 +24,11 @@ const Fade = styled.div`
   left: 0;
 `;
 
-const Container = styled.div`
+const Container = styled.button`
   ${BoardTileColumnStyle}
+  border: none;
+  outline: none;
+  background: none;
 `;
 
 const Wrapper = styled.div`
