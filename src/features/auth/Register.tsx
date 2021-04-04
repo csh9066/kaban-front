@@ -40,7 +40,7 @@ function Register() {
   });
 
   return (
-    <AuthTemplate type="register">
+    <AuthTemplate type="register" errorMessage={error}>
       <form onSubmit={handleSubmit(onSubmitForm)}>
         <FormItem>
           <Input placeholder="이메일" name="email" ref={register} />
@@ -69,8 +69,15 @@ function Register() {
           <Input placeholder="이름" name="username" ref={register} />
           <ErrorMessage>{errors.username?.message}</ErrorMessage>
         </FormItem>
-        <Button color="primary" block align="center" size="large" type="submit">
-          회원가입
+        <Button
+          color="primary"
+          block
+          align="center"
+          size="large"
+          type="submit"
+          disabled={loading}
+        >
+          {loading ? "로딩중" : "회원가입"}
         </Button>
       </form>
     </AuthTemplate>
