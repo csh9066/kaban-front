@@ -6,9 +6,10 @@ import ListTitle from "./ListTitle";
 import { useSelector } from "react-redux";
 import AddCard from "../card/AddCard";
 import { selectCardById } from "../card/CardSlice";
-import { ICard, IList } from "../../types";
 import Card from "../card/Card";
 import { RootState } from "../../store";
+import { IList } from "./types";
+import { ICard } from "../card/types";
 
 interface Props {
   index: number;

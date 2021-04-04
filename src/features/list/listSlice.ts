@@ -1,4 +1,3 @@
-import { IList } from "../../types";
 import {
   createEntityAdapter,
   createSlice,
@@ -7,6 +6,7 @@ import {
 import { DraggableLocation } from "react-beautiful-dnd";
 import { reorder } from "../../lib/reorder";
 import { RootState } from "../../store";
+import { IList } from "./types";
 
 const listAdapter = createEntityAdapter<IList>({
   selectId: (list) => list.id,
