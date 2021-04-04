@@ -7,12 +7,12 @@ interface Props extends RouteProps {
 }
 
 function PrivateRoute({ component: Component, ...rest }: Props) {
-  const user = useSelector((state: RootState) => state.user.user);
+  const me = useSelector((state: RootState) => state.auth.me);
   return (
     <Route
       {...rest}
       render={(props) =>
-        user ? <Component {...props} /> : <Redirect to="/login" />
+        me ? <Component {...props} /> : <Redirect to="/login" />
       }
     />
   );
