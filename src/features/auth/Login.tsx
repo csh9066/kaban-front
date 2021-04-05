@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import AuthTemplate from "../auth/AuthTemplate";
+import useLogin from "./hooks/useLogin";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -15,14 +16,14 @@ function Login() {
     setPassword(e.target.value);
   };
 
-  const [errorMessage, setErrorMessage] = useState("");
+  const { error, login } = useLogin();
   const onSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setErrorMessage("babo");
+    login({ email, password });
   };
 
   return (
-    <AuthTemplate type="login" errorMessage={errorMessage}>
+    <AuthTemplate type="login" errorMessage={error}>
       <form onSubmit={onSubmitForm}>
         <InputWithMarginBottom
           placeholder="이메일"
