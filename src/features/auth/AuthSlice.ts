@@ -13,15 +13,15 @@ const userSlice = createSlice({
   name: "auth",
   initialState: initialState,
   reducers: {
-    setMe(state, payload: PayloadAction<any>) {
+    setMe(state, payload: PayloadAction<IUser>) {
       state.me = payload.payload;
     },
-    clearAuth(state) {
+    initializeAuth(state) {
       state = initialState;
     },
   },
 });
 
-export const { setMe } = userSlice.actions;
+export const { setMe, initializeAuth } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IBoard } from "../../types";
 import palette from "../../lib/palette";
+import { IBoard } from "./types";
 
 const initialState: { boards: IBoard[] } = {
   boards: [
