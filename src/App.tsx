@@ -4,8 +4,15 @@ import Board from "./pages/Board";
 import BoardList from "./pages/BoardList";
 import Login from "./features/auth/Login";
 import Register from "./features/auth/Register";
+import useCheckAuthEffect from "./features/auth/hooks/useCheckAuthEffect";
 
 function App() {
+  const { isLoad } = useCheckAuthEffect();
+
+  if (!isLoad) {
+    return null;
+  }
+
   return (
     <>
       <Switch>
