@@ -1,12 +1,17 @@
-import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Button from "./Button";
 import { BsFillKanbanFill, BsHouseDoor } from "react-icons/bs";
+import useLogout from "../features/auth/hooks/useLogout";
+import Avatar from "./Avatar";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 interface Props {}
 
 export default function Header(props: Props) {
+  const me = useSelector((state: RootState) => state.auth.me);
+  const logout = useLogout();
   return (
     <StyledHeader>
       <div className="header__menu-group">
@@ -17,9 +22,7 @@ export default function Header(props: Props) {
         <BsFillKanbanFill />
         <h1>Kanban</h1>
       </BrandLogo>
-      <div className="header__menu-group">
-        <Button>로그인</Button>
-      </div>
+      <Avatar onClick={logout}>{me?.username[0]}</Avatar>
     </StyledHeader>
   );
 }
