@@ -1,7 +1,7 @@
 import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "./features/auth/PrivateRoute";
 import Board from "./pages/Board";
-import BoardList from "./pages/BoardList";
+import BoardList from "./features/board/BoardList";
 import Login from "./features/auth/Login";
 import Register from "./features/auth/Register";
 import useCheckAuthEffect from "./features/auth/hooks/useCheckAuthEffect";

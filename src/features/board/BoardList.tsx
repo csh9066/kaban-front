@@ -1,13 +1,12 @@
 import { BsGrid3X3GapFill } from "react-icons/bs";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
-import MainTemplate from "../components/MainTemplate";
-import BoardTile from "../features/board/BoardTile";
-import CreateBoard from "../features/board/CreateBoard";
-import { RootState } from "../store";
+import MainTemplate from "../../components/MainTemplate";
+import BoardTile from "./BoardTile";
+import CreateBoard from "./CreateBoard";
+import useFetchBoards from "./hooks/useFetchBoards";
 
 function BoardList() {
-  const boards = useSelector((state: RootState) => state.board.boards);
+  const { boards, loading } = useFetchBoards();
   return (
     <MainTemplate>
       <Container>
