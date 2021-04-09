@@ -1,18 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import palette from "../../lib/palette";
 import { BoardTileColumnStyle, BoardTileStyle } from "../../lib/styles";
+import CreateBoardModal from "./CreateBoardModal";
 
 interface Props {}
 
 function CreateBoard(props: Props) {
+  const [modalVsibile, setModalVisible] = useState(false);
+  const onToggleModal = () => {
+    setModalVisible(!modalVsibile);
+  };
   return (
-    <Container>
-      <Wrapper>
-        <Fade />
-        Create New Board
-      </Wrapper>
-    </Container>
+    <>
+      <Container onClick={onToggleModal}>
+        <Wrapper>
+          <Fade />
+          Create New Board
+        </Wrapper>
+      </Container>
+      <CreateBoardModal visible={modalVsibile} onCancel={onToggleModal} />
+    </>
   );
 }
 
