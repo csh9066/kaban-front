@@ -1,5 +1,6 @@
 import { BsGrid3X3GapFill } from "react-icons/bs";
 import styled from "styled-components";
+import Loader from "../../components/Loader";
 import MainTemplate from "../../components/MainTemplate";
 import BoardTile from "./BoardTile";
 import CreateBoard from "./CreateBoard";
@@ -7,6 +8,11 @@ import useFetchBoards from "./hooks/useFetchBoards";
 
 function BoardList() {
   const { boards, loading } = useFetchBoards();
+
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <MainTemplate>
       <Container>
