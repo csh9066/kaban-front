@@ -1,6 +1,6 @@
 import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "./features/auth/PrivateRoute";
-import Board from "./pages/Board";
+import Board from "./features/board/Board";
 import BoardList from "./features/board/BoardList";
 import Login from "./features/auth/Login";
 import Register from "./features/auth/Register";

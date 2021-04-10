@@ -1,16 +1,16 @@
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import styled from "styled-components";
-import List from "../features/list/List";
-import Button from "../components/Button";
+import List from "../list/List";
+import Button from "../../components/Button";
 import { useDispatch, useSelector } from "react-redux";
 import {
   reorderCardinList,
   reorderList,
   selectAllLists,
-} from "../features/list/ListSlice";
-import AddList from "../features/list/AddList";
-import MainTemplate from "../components/MainTemplate";
-import { RootState } from "../store";
+} from "../list/ListSlice";
+import AddList from "../list/AddList";
+import MainTemplate from "../../components/MainTemplate";
+import { RootState } from "../../store";
 import { useParams } from "react-router";
 
 export default function Board() {
@@ -49,11 +49,10 @@ export default function Board() {
   }
 
   return (
-    <MainTemplate background={board?.background}>
+    <MainTemplate background={board.background}>
       <Container>
         <Nav>
-          <Button>트렐로 만들기</Button>
-          <Button>초대하기</Button>
+          <Button>{board.title}</Button>
         </Nav>
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="list" direction="horizontal" type="list">
