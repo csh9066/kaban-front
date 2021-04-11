@@ -10,7 +10,7 @@ import Input from "../../components/Input";
 
 interface Props {}
 
-export default function AddList(props: Props) {
+export default function CreateList(props: Props) {
   const dispatch = useDispatch();
 
   const [title, setTitle] = useState("");
@@ -24,7 +24,7 @@ export default function AddList(props: Props) {
   };
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const onAddList = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!title.length) {
       return;
@@ -44,7 +44,7 @@ export default function AddList(props: Props) {
   return (
     <Container>
       {isAddable ? (
-        <AddListForm onSubmit={onAddList}>
+        <AddListForm onSubmit={onSubmitForm}>
           <Input
             autoFocus
             placeholder="Enter list title..."
