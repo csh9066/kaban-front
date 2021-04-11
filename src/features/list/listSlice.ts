@@ -6,6 +6,7 @@ import {
 import { DraggableLocation } from "react-beautiful-dnd";
 import { reorder } from "../../lib/reorder";
 import { RootState } from "../../store";
+import { FetchListResponse } from "../board/types";
 import { IList } from "./types";
 
 const listAdapter = createEntityAdapter<IList>({
@@ -17,6 +18,13 @@ export const listSlice = createSlice({
   initialState: listAdapter.getInitialState(),
   reducers: {
     addList: listAdapter.addOne,
+    setLists(state, { payload }: PayloadAction<FetchListResponse[]>) {
+      const lists = payload.map((list) => ({
+        ...list,
+        cards: list.cards.map((card) => card.id),
+      }));
+      listAdapter.setAll(state, lists);
+    },
     addCardToList(
       state,
       { payload }: PayloadAction<{ listId: string; cardId: string }>
@@ -60,7 +68,6 @@ export const listSlice = createSlice({
       );
     },
     updateList: listAdapter.updateOne,
-    upsertLists: listAdapter.upsertMany,
   },
 });
 
@@ -72,11 +79,11 @@ export const {
 
 export const {
   addList,
-  upsertLists,
   updateList,
   reorderList,
   reorderCardinList,
   addCardToList,
+  setLists,
 } = listSlice.actions;
 
 export default listSlice.reducer;

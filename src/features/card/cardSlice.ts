@@ -1,4 +1,10 @@
-import { createEntityAdapter, createSlice, Dispatch } from "@reduxjs/toolkit";
+import { FetchListResponse } from "./../board/types";
+import {
+  createEntityAdapter,
+  createSlice,
+  Dispatch,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 import { addCardToList, selectListById } from "../list/ListSlice";
 import { RootState } from "../../store";
 import { ICard } from "./types";
@@ -13,6 +19,13 @@ export const cardSlice = createSlice({
   initialState: cardAdapter.getInitialState(),
   reducers: {
     addCard: cardAdapter.addOne,
+    setCardsByLists(
+      state,
+      { payload: lists }: PayloadAction<FetchListResponse[]>
+    ) {
+      const cards = lists.flatMap((list) => list.cards);
+      cardAdapter.setAll(state, cards);
+    },
   },
 });
 
@@ -20,7 +33,7 @@ export const { selectById: selectCardById } = cardAdapter.getSelectors(
   (state: RootState) => state.card
 );
 
-export const { addCard } = cardSlice.actions;
+export const { addCard, setCardsByLists } = cardSlice.actions;
 
 export const createCard = ({
   listId,

@@ -9,6 +9,3 @@ api.interceptors.request.use((config) => {
   config.headers.common["Authorization"] = `Bearer ${accessToken}`;
   return config;
 });
-
-// API endpoint
-const API_REGISTER = "auth/register";

@@ -1,22 +1,26 @@
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import styled from "styled-components";
-import List from "../list/List";
+import List from "../../features/list/List";
 import Button from "../../components/Button";
 import { useDispatch, useSelector } from "react-redux";
 import {
   reorderCardinList,
   reorderList,
   selectAllLists,
-} from "../list/ListSlice";
-import AddList from "../list/AddList";
-import MainTemplate from "../../components/MainTemplate";
-import { RootState } from "../../store";
+} from "../../features/list/ListSlice";
 import { useParams } from "react-router";
+import { RootState } from "../../store";
+import MainTemplate from "../../components/MainTemplate";
+import AddList from "../list/AddList";
+import useFetchBoard from "./hooks/useFetchDetailBoard";
+import Loader from "../../components/Loader";
 
 export default function Board() {
-  const dispatch = useDispatch();
-
+  const { id } = useParams<{ id: string }>();
+  const { loading, error } = useFetchBoard(id);
   const lists = useSelector(selectAllLists);
+  const board = useSelector((state: RootState) => state.board.detail);
+  const dispatch = useDispatch();
 
   const onDragEnd = ({ destination, source, type }: DropResult) => {
     if (!destination) {
@@ -39,20 +43,19 @@ export default function Board() {
     }
   };
 
-  const { id } = useParams<{ id: string }>();
-  const board = useSelector((state: RootState) =>
-    state.board.boards.find((board) => board.id === parseInt(id))
-  );
+  if (loading) {
+    return <Loader />;
+  }
 
-  if (!board) {
-    return <div>not found board</div>;
+  if (!board && error) {
+    return <div>{error.response?.data.message}</div>;
   }
 
   return (
-    <MainTemplate background={board.background}>
+    <MainTemplate background={board?.background}>
       <Container>
         <Nav>
-          <Button>{board.title}</Button>
+          <Button>{board?.title}</Button>
         </Nav>
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="list" direction="horizontal" type="list">
