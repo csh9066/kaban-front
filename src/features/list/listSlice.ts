@@ -18,6 +18,7 @@ export const listSlice = createSlice({
   initialState: listAdapter.getInitialState(),
   reducers: {
     addList: listAdapter.addOne,
+    removeListById: listAdapter.removeOne,
     setLists(state, { payload }: PayloadAction<FetchListResponse[]>) {
       const lists = payload.map((list) => ({
         ...list,
@@ -79,6 +80,7 @@ export const {
 
 export const {
   addList,
+  removeListById,
   updateList,
   reorderList,
   reorderCardinList,

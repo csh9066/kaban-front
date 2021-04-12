@@ -1,18 +1,15 @@
 import React, { useRef, useState } from "react";
 import { MdAdd, MdClose } from "react-icons/md";
-import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import palette from "../../lib/palette";
-import { addList } from "./ListSlice";
-import { v4 as uuidv4 } from "uuid";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
+import useCreateList from "./hooks/useCreateList";
 
 interface Props {}
 
 export default function CreateList(props: Props) {
-  const dispatch = useDispatch();
-
+  const createList = useCreateList();
   const [title, setTitle] = useState("");
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -30,13 +27,7 @@ export default function CreateList(props: Props) {
       return;
     }
 
-    dispatch(
-      addList({
-        id: uuidv4(),
-        title,
-        cards: [],
-      })
-    );
+    createList(title);
     setTitle("");
     inputRef.current?.focus();
   };

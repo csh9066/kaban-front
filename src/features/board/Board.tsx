@@ -11,7 +11,7 @@ import {
 import { useParams } from "react-router";
 import { RootState } from "../../store";
 import MainTemplate from "../../components/MainTemplate";
-import AddList from "../list/AddList";
+import CreateList from "../list/CreateList";
 import useFetchBoard from "./hooks/useFetchDetailBoard";
 import Loader from "../../components/Loader";
 
@@ -65,7 +65,7 @@ export default function Board() {
                   <List list={list} key={list.id} index={index} />
                 ))}
                 {placeholder}
-                <AddList />
+                <CreateList />
               </Content>
             )}
           </Droppable>
