@@ -26,11 +26,19 @@ export const listSlice = createSlice({
       }));
       listAdapter.setAll(state, lists);
     },
-    addCardToList(
+    addCardInList(
       state,
       { payload }: PayloadAction<{ listId: string; cardId: string }>
     ) {
       state.entities[payload.listId]?.cards.push(payload.cardId);
+    },
+    removeCardInList(
+      state,
+      { payload }: PayloadAction<{ listId: string; cardId: string }>
+    ) {
+      state.entities[payload.listId]?.cards.filter(
+        (cardId) => cardId !== payload.cardId
+      );
     },
     reorderCardinList(
       state,
@@ -84,7 +92,8 @@ export const {
   updateList,
   reorderList,
   reorderCardinList,
-  addCardToList,
+  addCardInList,
+  removeCardInList,
   setLists,
 } = listSlice.actions;
 

@@ -7,7 +7,7 @@ import {
   reorderCardinList,
   reorderList,
   selectAllLists,
-} from "../../features/list/ListSlice";
+} from "../../features/list/listSlice";
 import { useParams } from "react-router";
 import { RootState } from "../../store";
 import MainTemplate from "../../components/MainTemplate";

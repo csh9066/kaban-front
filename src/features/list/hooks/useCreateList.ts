@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import { v4 as uuidv4 } from "uuid";
 import { IList } from "../types";
-import { addList, removeListById } from "../ListSlice";
+import { addList, removeListById } from "../listSlice";
 
 export default function useCreateList() {
   const boardId = useSelector((state: RootState) => state.board.detail?.id);

@@ -4,7 +4,7 @@ import { BsFillTrashFill } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
 import palette from "../../lib/palette";
-import { updateList } from "./ListSlice";
+import { updateList } from "./listSlice";
 import Input from "../../components/Input";
 
 interface Props {

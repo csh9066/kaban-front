@@ -3,8 +3,8 @@ import { api } from "../../../lib/api";
 import { useEffect, useState } from "react";
 import { batch, useDispatch } from "react-redux";
 import { setDetailBoard } from "../BoardSlice";
-import { setCardsByLists } from "../../card/CardSlice";
-import { setLists } from "../../list/ListSlice";
+import { setCardsByLists } from "../../card/cardSlice";
+import { setLists } from "../../list/listSlice";
 import { AxiosError } from "axios";
 
 function useFetchDetailBoard(id: string) {

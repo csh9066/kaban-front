@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { api } from "./../../../lib/api";
 import { useEffect, useState } from "react";
 import { IBoard } from "../types";

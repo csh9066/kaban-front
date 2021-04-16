@@ -5,7 +5,7 @@ import { Draggable, Droppable } from "react-beautiful-dnd";
 import ListTitle from "./ListTitle";
 import { useSelector } from "react-redux";
 import AddCard from "../card/AddCard";
-import { selectCardById } from "../card/CardSlice";
+import { selectCardById } from "../card/cardSlice";
 import Card from "../card/Card";
 import { RootState } from "../../store";
 import { IList } from "./types";
