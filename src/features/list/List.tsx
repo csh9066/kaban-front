@@ -4,7 +4,7 @@ import palette from "../../lib/palette";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import ListTitle from "./ListTitle";
 import { useSelector } from "react-redux";
-import AddCard from "../card/AddCard";
+import CreateCard from "../card/CreateCard";
 import { selectCardById } from "../card/cardSlice";
 import Card from "../card/Card";
 import { RootState } from "../../store";
@@ -41,7 +41,7 @@ function List({ index, list }: Props) {
                 </div>
               )}
             </Droppable>
-            <AddCard listId={list.id} />
+            <CreateCard listId={list.id} />
           </div>
         </Container>
       )}

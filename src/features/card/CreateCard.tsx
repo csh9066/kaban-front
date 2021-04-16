@@ -1,20 +1,16 @@
 import React, { useState } from "react";
 import { MdAdd, MdClose } from "react-icons/md";
-import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import palette from "../../lib/palette";
-import { createCard } from "./CardSlice";
 import Button from "../../components/Button";
-import { v4 as uuidv4 } from "uuid";
 import TextArea from "../../components/TextArea";
+import useCreateCard from "./hooks/useCreateCard";
 
 interface Props {
   listId: string;
 }
 
-export default function AddCard({ listId }: Props) {
-  const dispatch = useDispatch();
-
+export default function CreactCard({ listId }: Props) {
   const [title, setTitle] = useState("");
   const onChangeTitle = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTitle(e.target.value.trimStart());
@@ -25,20 +21,13 @@ export default function AddCard({ listId }: Props) {
     setIsAddable(!isAddable);
   };
 
+  const createCard = useCreateCard(listId);
   const onAddCard = () => {
     if (!title.length) {
       return;
     }
 
-    dispatch(
-      createCard({
-        card: {
-          id: uuidv4(),
-          title,
-        },
-        listId,
-      })
-    );
+    createCard(title);
     setTitle("");
   };
 
