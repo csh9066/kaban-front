@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { batch, useDispatch } from "react-redux";
 import { setDetailBoard } from "../BoardSlice";
 import { setCardsByLists } from "../../card/cardSlice";
-import { setLists } from "../../list/listSlice";
+import { setFetchLists } from "../../list/listSlice";
 import { AxiosError } from "axios";
 
 function useFetchDetailBoard(id: string) {
@@ -19,7 +19,7 @@ function useFetchDetailBoard(id: string) {
       const { lists, ...board } = res.data;
       batch(() => {
         distpach(setDetailBoard(board));
-        distpach(setLists(lists));
+        distpach(setFetchLists(lists));
         distpach(setCardsByLists(lists));
       });
     } catch (e) {

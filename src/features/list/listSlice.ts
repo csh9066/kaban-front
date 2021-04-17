@@ -11,6 +11,7 @@ import { IList } from "./types";
 
 const listAdapter = createEntityAdapter<IList>({
   selectId: (list) => list.id,
+  sortComparer: (a, b) => a.order - b.order,
 });
 
 export const listSlice = createSlice({
@@ -19,7 +20,7 @@ export const listSlice = createSlice({
   reducers: {
     addList: listAdapter.addOne,
     removeListById: listAdapter.removeOne,
-    setLists(state, { payload }: PayloadAction<FetchListResponse[]>) {
+    setFetchLists(state, { payload }: PayloadAction<FetchListResponse[]>) {
       const lists = payload.map((list) => ({
         ...list,
         cards: list.cards.map((card) => card.id),
@@ -94,7 +95,7 @@ export const {
   reorderCardinList,
   addCardInList,
   removeCardInList,
-  setLists,
+  setFetchLists,
 } = listSlice.actions;
 
 export default listSlice.reducer;
