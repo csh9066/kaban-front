@@ -11,7 +11,7 @@ import { IList } from "./types";
 
 const listAdapter = createEntityAdapter<IList>({
   selectId: (list) => list.id,
-  sortComparer: (a, b) => a.order - b.order,
+  // sortComparer: (a, b) => a.order - b.order,
 });
 
 export const listSlice = createSlice({
@@ -27,6 +27,7 @@ export const listSlice = createSlice({
       }));
       listAdapter.setAll(state, lists);
     },
+    setLists: listAdapter.setAll,
     addCardInList(
       state,
       { payload }: PayloadAction<{ listId: string; cardId: string }>
@@ -41,7 +42,7 @@ export const listSlice = createSlice({
         (cardId) => cardId !== payload.cardId
       );
     },
-    reorderCardinList(
+    reorderCardsinList(
       state,
       {
         payload,
@@ -61,22 +62,6 @@ export const listSlice = createSlice({
       const [card] = sourceList.cards.splice(source.index, 1);
       destinationList.cards.splice(destination.index, 0, card);
     },
-    reorderList(
-      state,
-      {
-        payload,
-      }: PayloadAction<{
-        source: DraggableLocation;
-        destination: DraggableLocation;
-      }>
-    ) {
-      const { source, destination } = payload;
-      const lists = state.ids.map((id) => state.entities[id]) as IList[];
-      listAdapter.setAll(
-        state,
-        reorder(lists, source.index, destination.index)
-      );
-    },
     updateList: listAdapter.updateOne,
   },
 });
@@ -91,8 +76,8 @@ export const {
   addList,
   removeListById,
   updateList,
-  reorderList,
-  reorderCardinList,
+  setLists,
+  reorderCardsinList,
   addCardInList,
   removeCardInList,
   setFetchLists,

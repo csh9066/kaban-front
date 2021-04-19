@@ -3,7 +3,8 @@ export function reorder<T>(
   sourceIndex: number,
   destinationIndex: number
 ): T[] {
-  const [item] = list.splice(sourceIndex, 1);
-  list.splice(destinationIndex, 0, item);
-  return list;
+  const result = [...list];
+  const [item] = result.splice(sourceIndex, 1);
+  result.splice(destinationIndex, 0, item);
+  return result;
 }
